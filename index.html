@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copa Equilibrium 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #D4AF37;
+  --gold-light: #F4E4A6;
+  --green-dark: #004D2C;
+  --green: #009B3A;
+  --green-light: #00C04B;
+  --yellow: #FFDF00;
+  --blue: #002776;
+  --blue-light: #1A4D8F;
+  --white: #FFFFFF;
+  --dark: #0A1628;
+  --gray: #8B9DC3;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, #001220 0%, #002776 40%, #004D2C 70%, #001A0E 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0,155,58,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(0,39,118,0.2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(212,175,55,0.1) 0%, transparent 40%);
+}
+.field-lines {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05;
+  background: 
+    linear-gradient(90deg, transparent 49.5%, var(--white) 49.5%, var(--white) 50.5%, transparent 50.5%),
+    radial-gradient(circle at 50% 50%, transparent 18%, var(--white) 18%, var(--white) 18.5%, transparent 18.5%);
+}
+.stars { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+.star {
+  position: absolute; width: 3px; height: 3px;
+  background: var(--gold); border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle { 0% { opacity: 0.2; } 100% { opacity: 1; } }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
+.trophy-icon {
+  font-size: 5rem; margin-bottom: 0.5rem;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(212,175,55,0.5));
+}
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+.hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--yellow) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+.hero h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 400;
+  color: var(--gray); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.5rem;
+}
+.hero-subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.6); margin-top: 1.5rem; max-width: 600px; }
+
+section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-title {
+  font-family: 'Oswald', sans-serif; font-size: 2.2rem; text-transform: uppercase;
+  color: var(--gold); text-align: center; margin-bottom: 0.5rem; letter-spacing: 0.05em;
+}
+.section-sub { text-align: center; color: var(--gray); font-size: 1rem; margin-bottom: 3rem; }
+
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.rule-card {
+  background: linear-gradient(145deg, rgba(0,39,118,0.3), rgba(0,77,44,0.2));
+  border: 1px solid rgba(212,175,55,0.2); border-radius: 16px;
+  padding: 2rem; position: relative; overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.rule-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+.rule-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--gold), var(--blue));
+}
+.rule-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.rule-card h3 {
+  font-family: 'Oswald', sans-serif; font-size: 1.3rem;
+  color: var(--gold-light); margin-bottom: 0.5rem; text-transform: uppercase;
+}
+.rule-card p { color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.6; }
+
+/* FAIXAS VISUAIS */
+.faixas-container {
+  display: flex; flex-direction: column; gap: 0; margin: 2rem 0;
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(212,175,55,0.15);
+}
+.faixa {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center; padding: 1.2rem 1.5rem;
+  transition: transform 0.2s;
+  position: relative;
+}
+.faixa:hover { transform: scale(1.01); z-index: 2; }
+.faixa-base { background: linear-gradient(90deg, rgba(0,39,118,0.3), rgba(0,39,118,0.15)); }
+.faixa-oitavas { background: linear-gradient(90deg, rgba(205,127,50,0.2), rgba(205,127,50,0.08)); }
+.faixa-quartas { background: linear-gradient(90deg, rgba(192,192,192,0.2), rgba(192,192,192,0.08)); }
+.faixa-semi { background: linear-gradient(90deg, rgba(0,155,58,0.2), rgba(0,155,58,0.08)); }
+.faixa-final { background: linear-gradient(90deg, rgba(212,175,55,0.25), rgba(212,175,55,0.08)); }
+.faixa-champion { background: linear-gradient(90deg, rgba(212,175,55,0.35), rgba(0,155,58,0.15)); }
+
+.faixa-gols {
+  font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700;
+}
+.faixa-fase {
+  display: inline-block; padding: 0.25rem 0.8rem; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600; font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.fase-grupos { background: rgba(139,157,195,0.2); color: var(--gray); }
+.fase-oitavas { background: rgba(205,127,50,0.25); color: #CD7F32; }
+.fase-quartas { background: rgba(192,192,192,0.25); color: #D0D0D0; }
+.fase-semi { background: rgba(0,155,58,0.25); color: var(--green-light); }
+.fase-final { background: rgba(212,175,55,0.3); color: var(--gold); }
+.fase-champion { background: linear-gradient(90deg, rgba(212,175,55,0.4), rgba(0,155,58,0.3)); color: var(--gold-light); }
+
+.faixa-valor {
+  font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 600; text-align: right;
+}
+.faixa-ganho { text-align: right; font-size: 0.9rem; }
+.green { color: var(--green-light); }
+.gold-text { color: var(--gold); }
+.gold-light-text { color: var(--gold-light); }
+
+/* BARRA DE PROGRESSO VISUAL */
+.progress-section { margin: 3rem 0; }
+.progress-bar-container {
+  position: relative; height: 60px; background: rgba(0,20,60,0.5);
+  border-radius: 30px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15);
+}
+.progress-fill {
+  position: absolute; top: 0; left: 0; bottom: 0; border-radius: 30px;
+  display: flex; align-items: center; justify-content: flex-end; padding-right: 1rem;
+  font-family: 'Oswald', sans-serif; font-weight: 600;
+  transition: width 1s ease-out;
+}
+.progress-markers {
+  position: relative; display: flex; justify-content: space-between;
+  margin-top: 0.8rem; padding: 0 1rem;
+}
+.marker {
+  text-align: center; font-size: 0.75rem; color: var(--gray);
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.marker strong { display: block; font-size: 0.9rem; color: var(--white); }
+
+/* TABLE DETALHADA */
+.table-wrapper {
+  background: linear-gradient(145deg, rgba(0,39,118,0.2), rgba(0,20,60,0.4));
+  border: 1px solid rgba(212,175,55,0.15); border-radius: 16px; overflow: hidden; margin: 2rem 0;
+}
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  font-family: 'Oswald', sans-serif; text-transform: uppercase; font-size: 0.85rem;
+  letter-spacing: 0.1em; padding: 1rem 1.2rem; background: rgba(0,39,118,0.5);
+  color: var(--gold); text-align: center;
+}
+tbody td {
+  padding: 0.8rem 1.2rem; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem;
+}
+tbody tr { transition: background 0.2s; }
+tbody tr:hover { background: rgba(212,175,55,0.05); }
+tbody tr.highlight { background: rgba(0,155,58,0.1); }
+tbody tr.gold-row { background: linear-gradient(90deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05)); }
+.value { font-family: 'Oswald', sans-serif; font-size: 1.3rem; }
+
+/* PODIUM */
+.podium { display: flex; align-items: flex-end; justify-content: center; gap: 1rem; margin: 3rem auto; max-width: 700px; }
+.podium-place { flex: 1; max-width: 200px; text-align: center; }
+.podium-bar {
+  border-radius: 12px 12px 0 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end; padding: 1.5rem 1rem;
+  position: relative; overflow: hidden;
+}
+.podium-bar::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1;
+  background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 11px);
+}
+.place-1 .podium-bar { height: 280px; background: linear-gradient(180deg, var(--gold), #8B6914); box-shadow: 0 0 40px rgba(212,175,55,0.3); }
+.place-2 .podium-bar { height: 220px; background: linear-gradient(180deg, #C0C0C0, #6B6B6B); }
+.place-3 .podium-bar { height: 170px; background: linear-gradient(180deg, #CD7F32, #8B4513); }
+.podium-medal { font-size: 2.5rem; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+.podium-name { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; position: relative; z-index: 1; }
+.podium-laudos { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; opacity: 0.8; position: relative; z-index: 1; }
+.podium-number { font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700; position: relative; z-index: 1; opacity: 0.3; }
+
+.prizes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.prize-card {
+  background: linear-gradient(145deg, rgba(0,20,60,0.5), rgba(0,39,118,0.2));
+  border: 1px solid rgba(212,175,55,0.15); border-radius: 16px; padding: 2rem;
+  text-align: center; transition: transform 0.3s;
+}
+.prize-card:hover { transform: scale(1.03); }
+.prize-medal { font-size: 3rem; margin-bottom: 1rem; }
+.prize-title { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: var(--gold-light); text-transform: uppercase; margin-bottom: 0.5rem; }
+.prize-desc { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.5; }
+
+.footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid rgba(212,175,55,0.1); }
+.footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; }
+.footer p { color: var(--gray); font-size: 0.85rem; margin-top: 0.5rem; }
+
+.cta { text-align: center; margin: 3rem 0; }
+.cta-btn {
+  display: inline-block; padding: 1rem 3rem; font-family: 'Oswald', sans-serif;
+  font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--dark); background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none; border-radius: 50px; cursor: pointer; text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,175,55,0.5); }
+
+@media (max-width: 768px) {
+  .faixa { grid-template-columns: 1fr 1fr; gap: 0.5rem; padding: 1rem; }
+  .podium { flex-direction: column; align-items: center; }
+  .podium-place { max-width: 100%; }
+  .place-1 .podium-bar, .place-2 .podium-bar, .place-3 .podium-bar {
+    height: auto; padding: 1.5rem; flex-direction: row; gap: 1rem; border-radius: 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="field-lines"></div>
+  <div class="stars">
+    <div class="star" style="top:10%;left:15%;animation-delay:0.3s"></div>
+    <div class="star" style="top:20%;left:75%;animation-delay:0.8s"></div>
+    <div class="star" style="top:40%;left:25%;animation-delay:1.2s"></div>
+    <div class="star" style="top:60%;left:85%;animation-delay:0.5s"></div>
+    <div class="star" style="top:80%;left:45%;animation-delay:1.5s"></div>
+    <div class="star" style="top:15%;left:55%;animation-delay:0.1s"></div>
+    <div class="star" style="top:70%;left:10%;animation-delay:0.9s"></div>
+    <div class="star" style="top:35%;left:90%;animation-delay:1.8s"></div>
+  </div>
+  <div class="hero-content">
+    <div class="trophy-icon">🏆</div>
+    <h1>Copa Equilibrium<br>2026</h1>
+    <h2>Quem faz mais gols, leva a taça</h2>
+    <p class="hero-subtitle">Programa de Produtividade por Entrega de Laudos<br>Cada laudo é um gol. Cada paciente atendido, uma vitória.</p>
+  </div>
+</div>
+
+<!-- REGRAS -->
+<section>
+  <h2 class="section-title">⚽ Regras do Jogo</h2>
+  <p class="section-sub">Simples, transparente e justo — como toda boa partida</p>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-icon">🥅</div>
+      <h3>Cada laudo = 1 gol</h3>
+      <p>Laudo completo entregue e assinado conta como gol. Quanto mais gols, maior o prêmio.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">🏟️</div>
+      <h3>Fase de grupos: 12 gols</h3>
+      <p>O salário base de R$ 3.040 é garantido. Os primeiros 12 laudos classificam você para o mata-mata!</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">⚡</div>
+      <h3>Mata-mata: Cada gol vale</h3>
+      <p>A partir do 13º laudo, seus ganhos sobem a cada fase: Oitavas, Quartas, Semi, Final e Campeã!</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">🏆</div>
+      <h3>Teto: R$ 6.000</h3>
+      <p>Com 30 laudos você atinge o teto — um aumento de quase 100% sobre o salário atual!</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">🧠</div>
+      <h3>Cortex é o VAR</h3>
+      <p>Com o Cortex, a bateria completa agora leva 6 sessões ao invés de 12. Tecnologia a seu favor!</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">📊</div>
+      <h3>Placar ao vivo</h3>
+      <p>Ranking mensal com a artilharia de cada jogadora. Transparência total na contagem de gols.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAIXAS DE PREMIAÇÃO -->
+<section>
+  <h2 class="section-title">🏅 Fases do Campeonato</h2>
+  <p class="section-sub">Avance nas fases e aumente seus ganhos — do Grupo à Taça!</p>
+
+  <div class="faixas-container">
+    <div class="faixa faixa-base">
+      <div>
+        <span class="faixa-gols">⚽ 12</span>
+        <span style="font-size:0.85rem;color:var(--gray);margin-left:0.3rem">gols</span>
+      </div>
+      <div><span class="faixa-fase fase-grupos">🏟️ Fase de Grupos</span></div>
+      <div class="faixa-valor" style="color:var(--gray)">R$ 3.040</div>
+      <div class="faixa-ganho" style="color:var(--gray)">Base garantida</div>
+    </div>
+    <div class="faixa faixa-oitavas">
+      <div>
+        <span class="faixa-gols" style="color:#CD7F32">⚽ 15</span>
+        <span style="font-size:0.85rem;color:#CD7F32;margin-left:0.3rem">gols</span>
+      </div>
+      <div><span class="faixa-fase fase-oitavas">⚔️ Oitavas de Final</span></div>
+      <div class="faixa-valor" style="color:#CD7F32">R$ 3.490</div>
+      <div class="faixa-ganho" style="color:#CD7F32">+R$ 450 (+15%)</div>
+    </div>
+    <div class="faixa faixa-quartas">
+      <div>
+        <span class="faixa-gols" style="color:#D0D0D0">⚽ 20</span>
+        <span style="font-size:0.85rem;color:#D0D0D0;margin-left:0.3rem">gols</span>
+      </div>
+      <div><span class="faixa-fase fase-quartas">🔥 Quartas de Final</span></div>
+      <div class="faixa-valor" style="color:#D0D0D0">R$ 4.000</div>
+      <div class="faixa-ganho" style="color:#D0D0D0">+R$ 960 (+32%)</div>
+    </div>
+    <div class="faixa faixa-semi">
+      <div>
+        <span class="faixa-gols green">⚽ 25</span>
+        <span style="font-size:0.85rem;color:var(--green-light);margin-left:0.3rem">gols</span>
+      </div>
+      <div><span class="faixa-fase fase-semi">⭐ Semifinal</span></div>
+      <div class="faixa-valor green">R$ 5.000</div>
+      <div class="faixa-ganho green">+R$ 1.960 (+64%)</div>
+    </div>
+    <div class="faixa faixa-final">
+      <div>
+        <span class="faixa-gols gold-text">⚽ 30</span>
+        <span style="font-size:0.85rem;color:var(--gold);margin-left:0.3rem">gols</span>
+      </div>
+      <div><span class="faixa-fase fase-final">🏆 FINAL — CAMPEÃ!</span></div>
+      <div class="faixa-valor gold-text">R$ 6.000</div>
+      <div class="faixa-ganho gold-text">+R$ 2.960 (+97%)</div>
+    </div>
+  </div>
+
+  <!-- BARRA DE PROGRESSO -->
+  <div class="progress-section">
+    <div class="progress-bar-container">
+      <div class="progress-fill" style="width:40%;background:linear-gradient(90deg,var(--blue),#CD7F32);">
+        <span style="font-size:0.9rem;">12 gols</span>
+      </div>
+      <div class="progress-fill" style="width:50%;background:linear-gradient(90deg,transparent 80%,rgba(205,127,50,0.3));">
+      </div>
+      <div class="progress-fill" style="width:67%;background:linear-gradient(90deg,transparent 74%,rgba(192,192,192,0.2));">
+      </div>
+      <div class="progress-fill" style="width:83%;background:linear-gradient(90deg,transparent 80%,rgba(0,155,58,0.15));">
+      </div>
+      <div class="progress-fill" style="width:100%;background:linear-gradient(90deg,transparent 83%,rgba(212,175,55,0.1));">
+      </div>
+    </div>
+    <div class="progress-markers">
+      <div class="marker"><strong>12</strong>Grupos<br>R$ 3.040</div>
+      <div class="marker"><strong>15</strong>Oitavas<br>R$ 3.490</div>
+      <div class="marker"><strong>20</strong>Quartas<br>R$ 4.000</div>
+      <div class="marker"><strong>25</strong>Semi<br>R$ 5.000</div>
+      <div class="marker"><strong>30</strong>🏆 Final<br>R$ 6.000</div>
+    </div>
+  </div>
+</section>
+
+<!-- TABELA DETALHADA -->
+<section>
+  <h2 class="section-title">📋 Tabela Gol a Gol</h2>
+  <p class="section-sub">Veja exatamente quanto ganha com cada laudo entregue</p>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Gols</th><th>Fase</th><th>Remuneração</th><th>Ganho</th><th>Aumento</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="value">12</td><td><span class="faixa-fase fase-grupos">Grupos</span></td>
+          <td class="value">R$ 3.040</td><td>—</td><td>Base</td>
+        </tr>
+        <tr>
+          <td class="value">13</td><td><span class="faixa-fase fase-oitavas">Oitavas</span></td>
+          <td class="value">R$ 3.190</td><td class="green">+R$ 150</td><td class="green">+5%</td>
+        </tr>
+        <tr>
+          <td class="value">14</td><td><span class="faixa-fase fase-oitavas">Oitavas</span></td>
+          <td class="value">R$ 3.340</td><td class="green">+R$ 300</td><td class="green">+10%</td>
+        </tr>
+        <tr class="highlight">
+          <td class="value">15</td><td><span class="faixa-fase fase-oitavas">⚔️ Oitavas</span></td>
+          <td class="value" style="color:#CD7F32">R$ 3.490</td><td style="color:#CD7F32">+R$ 450</td><td style="color:#CD7F32">+15%</td>
+        </tr>
+        <tr>
+          <td class="value">16</td><td><span class="faixa-fase fase-quartas">Quartas</span></td>
+          <td class="value">R$ 3.592</td><td class="green">+R$ 552</td><td class="green">+18%</td>
+        </tr>
+        <tr>
+          <td class="value">18</td><td><span class="faixa-fase fase-quartas">Quartas</span></td>
+          <td class="value">R$ 3.796</td><td class="green">+R$ 756</td><td class="green">+25%</td>
+        </tr>
+        <tr class="highlight">
+          <td class="value" style="color:#D0D0D0">20</td><td><span class="faixa-fase fase-quartas">🔥 Quartas</span></td>
+          <td class="value" style="color:#D0D0D0">R$ 4.000</td><td style="color:#D0D0D0">+R$ 960</td><td style="color:#D0D0D0">+32%</td>
+        </tr>
+        <tr>
+          <td class="value green">22</td><td><span class="faixa-fase fase-semi">Semi</span></td>
+          <td class="value green">R$ 4.400</td><td class="green">+R$ 1.360</td><td class="green">+45%</td>
+        </tr>
+        <tr class="gold-row">
+          <td class="value green">25</td><td><span class="faixa-fase fase-semi">⭐ Semi</span></td>
+          <td class="value green">R$ 5.000</td><td class="green">+R$ 1.960</td><td class="green">+64%</td>
+        </tr>
+        <tr class="gold-row">
+          <td class="value gold-text">28</td><td><span class="faixa-fase fase-final">Final</span></td>
+          <td class="value gold-text">R$ 5.600</td><td class="gold-text">+R$ 2.560</td><td class="gold-text">+84%</td>
+        </tr>
+        <tr class="gold-row" style="background:linear-gradient(90deg,rgba(212,175,55,0.25),rgba(0,155,58,0.15));">
+          <td class="value gold-light-text" style="font-size:1.5rem">30</td>
+          <td><span class="faixa-fase fase-champion">🏆 CAMPEÃ!</span></td>
+          <td class="value gold-light-text" style="font-size:1.5rem">R$ 6.000</td>
+          <td class="gold-light-text" style="font-weight:700">+R$ 2.960</td>
+          <td class="gold-light-text" style="font-weight:700">+97%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PÓDIO -->
+<section>
+  <h2 class="section-title">🏅 Pódio Mensal</h2>
+  <p class="section-sub">As 3 maiores artilheiras do mês sobem ao pódio</p>
+  <div class="podium">
+    <div class="podium-place place-2">
+      <div class="podium-bar">
+        <div class="podium-medal">🥈</div>
+        <div class="podium-name">Vice-Artilheira</div>
+        <div class="podium-laudos">Reconhecimento</div>
+        <div class="podium-number">2</div>
+      </div>
+    </div>
+    <div class="podium-place place-1">
+      <div class="podium-bar">
+        <div class="podium-medal">🥇</div>
+        <div class="podium-name">Artilheira</div>
+        <div class="podium-laudos">Troféu Rotativo</div>
+        <div class="podium-number">1</div>
+      </div>
+    </div>
+    <div class="podium-place place-3">
+      <div class="podium-bar">
+        <div class="podium-medal">🥉</div>
+        <div class="podium-name">Bronze</div>
+        <div class="podium-laudos">Menção</div>
+        <div class="podium-number">3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIAÇÕES -->
+<section>
+  <h2 class="section-title">🎖️ Premiações Especiais</h2>
+  <p class="section-sub">Além do bônus mensal, reconhecimentos para quem brilha</p>
+  <div class="prizes">
+    <div class="prize-card">
+      <div class="prize-medal">👑</div>
+      <div class="prize-title">Bola de Ouro</div>
+      <div class="prize-desc">Maior artilheira acumulada do semestre. Prêmio especial + dia de folga.</div>
+    </div>
+    <div class="prize-card">
+      <div class="prize-medal">🧤</div>
+      <div class="prize-title">Luva de Ouro</div>
+      <div class="prize-desc">Melhor taxa de conclusão — menos faltas e reagendamentos. Qualidade importa!</div>
+    </div>
+    <div class="prize-card">
+      <div class="prize-medal">⚽</div>
+      <div class="prize-title">Gol Mais Bonito</div>
+      <div class="prize-desc">Laudo mais elogiado pelo paciente ou médico solicitante no mês.</div>
+    </div>
+    <div class="prize-card">
+      <div class="prize-medal">🌟</div>
+      <div class="prize-title">Revelação</div>
+      <div class="prize-desc">Maior crescimento percentual entre um mês e outro. Para quem está evoluindo!</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARIANA -->
+<section>
+  <h2 class="section-title">⚽ Categoria Especial — Mariana</h2>
+  <p class="section-sub">Meio período, mesma garra</p>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Gols</th><th>Fase</th><th>Remuneração</th><th>Ganho</th></tr></thead>
+      <tbody>
+        <tr><td class="value">6</td><td><span class="faixa-fase fase-grupos">Grupos</span></td><td class="value">R$ 1.200</td><td>Base</td></tr>
+        <tr class="highlight"><td class="value">8</td><td><span class="faixa-fase fase-oitavas">Oitavas</span></td><td class="value green">R$ 1.400</td><td class="green">+R$ 200</td></tr>
+        <tr class="highlight"><td class="value">10</td><td><span class="faixa-fase fase-quartas">Quartas</span></td><td class="value green">R$ 1.600</td><td class="green">+R$ 400</td></tr>
+        <tr class="highlight"><td class="value">12</td><td><span class="faixa-fase fase-semi">Semi</span></td><td class="value green">R$ 1.800</td><td class="green">+R$ 600</td></tr>
+        <tr class="gold-row"><td class="value gold-text">15</td><td><span class="faixa-fase fase-champion">🏆 Campeã</span></td><td class="value gold-text">R$ 2.500</td><td class="gold-text">+R$ 1.300</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- VIGÊNCIA -->
+<section>
+  <h2 class="section-title">📅 Vigência</h2>
+  <p class="section-sub">A Copa começa agora!</p>
+  <div class="rules-grid" style="max-width:700px;margin:0 auto;">
+    <div class="rule-card">
+      <div class="rule-icon">🏁</div>
+      <h3>Início: Maio/2026</h3>
+      <p>Primeiro mês de apuração. Bônus pago junto ao salário de junho.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-icon">🔄</div>
+      <h3>Revisão Trimestral</h3>
+      <p>A cada 3 meses avaliamos juntos os resultados e ajustamos se necessário.</p>
+    </div>
+  </div>
+  <div class="cta">
+    <a class="cta-btn" href="#">Bora jogar! ⚽</a>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="footer-logo">Equilibrium Neuropsicologia</div>
+  <p>Copa Equilibrium 2026 — Programa de Produtividade por Entrega de Laudos</p>
+  <p style="margin-top:1rem;font-size:0.75rem;opacity:0.4;">Cada laudo é um gol. Cada paciente, uma vitória. Cada profissional, uma estrela. ⭐</p>
+</div>
+
+</body>
+</html>
